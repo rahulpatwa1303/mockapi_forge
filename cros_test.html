@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title>CORS Test</title></head>
+<body>
+    <button onclick="fetchMock()">Fetch Mock Data</button>
+    <pre id="result"></pre>
+    <script>
+        async function fetchMock() {
+            const url = 'http://localhost:3002/api/v1/mock/ABlCNhJI/dg'; // e.g., http://localhost:3000/api/v1/mock/yourprefix/users
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = 'Fetching...';
+            try {
+                const response = await fetch(url, {
+                    method: 'GET', // or POST, etc.
+                    headers: { 'X-Custom-Header': 'some-value' } // To test Allow-Headers
+                });
+                const data = await response.json();
+                resultElement.textContent = `Status: ${response.status}\n\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                resultElement.textContent = `Error: ${error}`;
+                console.error('Fetch error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
